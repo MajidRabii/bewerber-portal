@@ -1,0 +1,6 @@
+@BewerbungAPP_HostAddress = http://localhost:5067
+
+GET {{BewerbungAPP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

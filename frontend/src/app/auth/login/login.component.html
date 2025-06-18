@@ -1,0 +1,28 @@
+<form [formGroup]="formular" (ngSubmit)="anmelden()" class="login-formular">
+  <h2>Benutzer anmelden</h2>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Benutzername oder Email</mat-label>
+    <input matInput formControlName="benutzernameOderEmail" autocomplete="username" />
+    <mat-error *ngIf="formular.get('benutzernameOderEmail')?.invalid && formular.get('benutzernameOderEmail')?.touched">
+      Benutzername oder Email ist erforderlich
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Passwort</mat-label>
+    <input matInput type="password" formControlName="passwort" autocomplete="current-password" />
+    <mat-error *ngIf="formular.get('passwort')?.invalid && formular.get('passwort')?.touched">
+      Passwort ist erforderlich
+    </mat-error>
+  </mat-form-field>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="formular.invalid || istLaden">
+      Anmelden
+    </button>
+    <button mat-button type="button" (click)="zurRegistrierung()">
+      Noch kein Konto? Registrieren
+    </button>
+  </div>
+</form>

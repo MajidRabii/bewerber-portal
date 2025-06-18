@@ -1,0 +1,99 @@
+<mat-card class="stadt-list-card">
+
+  <mat-card-title>Liste der Bewerber</mat-card-title>
+
+  <mat-card-content>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="createNewBewerberProfil()">
+        <mat-icon>add</mat-icon> Neuer Bewerber
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-mdc-table mat-elevation-z8" *ngIf="!loading && dataSource.data.length > 0">
+
+      <!-- Anrede Column -->
+      <ng-container matColumnDef="anrede">
+        <th mat-header-cell *matHeaderCellDef>Anrede</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.anrede === 'H' ? 'Herr' : (element.anrede === 'F' ? 'Frau' : '') }}
+        </td>
+      </ng-container>
+
+      <!-- Vorname Column -->
+      <ng-container matColumnDef="vorname">
+        <th mat-header-cell *matHeaderCellDef> Vorname </th>
+        <td mat-cell *matCellDef="let item"> {{ item.vorname }} </td>
+      </ng-container>
+
+      <!-- Nachname Column -->
+      <ng-container matColumnDef="nachname">
+        <th mat-header-cell *matHeaderCellDef> Nachname </th>
+        <td mat-cell *matCellDef="let item"> {{ item.nachname }} </td>
+      </ng-container>
+
+      <!-- Geburtstag Column -->
+      <ng-container matColumnDef="geburtstag">
+        <th mat-header-cell *matHeaderCellDef> Geburtstag </th>
+        <td mat-cell *matCellDef="let item"> {{ item.geburtstag | date }} </td>
+      </ng-container>
+
+      <!-- Beruf1 Column -->
+      <ng-container matColumnDef="beruf1">
+        <th mat-header-cell *matHeaderCellDef>Beruf</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.beruf1_Name }}
+        </td>
+      </ng-container>
+
+      <!-- Erfahrung1 Column -->
+      <ng-container matColumnDef="erfahrung1">
+        <th mat-header-cell *matHeaderCellDef> Erfahrung1 </th>
+        <td mat-cell *matCellDef="let item"> {{ item.erfahrung1 }} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let item">
+          <mat-icon color="{{ item.status ? 'primary' : 'warn' }}">
+            {{ item.status ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Aktionen </th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-icon-button color="primary" (click)="viewBewerberProfil(item)" matTooltip="Anzeigen">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="editBewerberProfil(item)" matTooltip="Bearbeiten">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteBewerberProfil(item.id!)" matTooltip="Löschen">
+            <mat-icon>delete</mat-icon>
+          </button>
+       </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover-row"></tr>
+
+    </table>
+
+    <mat-paginator [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 25]" showFirstLastButtons>
+    </mat-paginator>
+
+    <div *ngIf="!loading && dataSource.data.length === 0">
+      <p>Keine Bewerber gefunden.</p>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

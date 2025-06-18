@@ -1,0 +1,34 @@
+<ng-container *ngIf="(benutzer$ | async) as benutzer; else leer">
+  <mat-toolbar color="primary">
+    <button mat-icon-button *ngIf="istEingeloggtStatus" (click)="toggleMenu()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="logo">Bewerbungsportal</span>
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="benutzer">
+      <span class="user">Willkommen, {{ benutzer.name }}</span>
+      <button mat-button (click)="logout()">Logout</button>
+    </ng-container>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav" mode="over" [(opened)]="menuGeoeffnet">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/bewerberprofil-list" (click)="menuGeoeffnet = false">Bewerberprofile</a>
+        <a mat-list-item routerLink="/stadt-liste" (click)="menuGeoeffnet = false">Städte</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="inhalt">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-template #leer>
+  <!-- مثلاً پیام خوش‌آمد یا لوگو -->
+</ng-template>

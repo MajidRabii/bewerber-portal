@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+
+/* الزامی! */
+@include mat-core();
+
+/* رنگ‌های اصلی */
+$my-primary: mat-palette($mat-indigo, 400, 200, 600);
+$my-accent: mat-palette($mat-blue-grey, A200, A100, A400);
+$my-warn: mat-palette($mat-red);
+
+/* تم سفارشی */
+$my-theme: mat-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  ),
+  typography: mat-typography-config(
+    $font-family: 'Segoe UI, Roboto, Helvetica Neue, sans-serif'
+  ),
+));
+
+.mat-select-panel {
+  background: mat.get-color-from-palette($your-theme-primary-palette, 50); // یا white
+  color: mat.get-color-from-palette($your-theme-primary-palette, 900);
+}
+
+/* اعمال تم برای تمام کامپوننت‌ها */
+@include angular-material-theme($my-theme);

@@ -1,0 +1,17 @@
+<form [formGroup]="formular" (ngSubmit)="codePrufen()" class="code-bestaetigen-formular">
+  <h2>Bestätigungscode eingeben</h2>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Code</mat-label>
+    <input matInput formControlName="code" />
+    <mat-error *ngIf="formular!.get('code')?.invalid && formular!.get('code')?.touched">
+      Code ist erforderlich
+    </mat-error>
+  </mat-form-field>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="formular!.invalid">
+      Code bestätigen
+    </button>
+  </div>
+</form>

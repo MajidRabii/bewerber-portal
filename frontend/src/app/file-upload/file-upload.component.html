@@ -1,0 +1,62 @@
+<div class="file-upload-container">
+  <label>{{ label }}</label>
+
+  <!-- اگر نوع فایل عکس است و preview موجود -->
+  <ng-container *ngIf="showImagePreview(); else uploadBlock">
+    <div class="image-wrapper">
+      <img
+        [src]="fileDataUrl"
+        alt="Bildvorschau"
+        class="uploaded-image-preview"
+      />
+      <button
+        mat-icon-button
+        class="edit-button"
+        type="button"
+        (click)="fileInput.click(); $event.stopPropagation()"
+        [disabled]="disabled || isViewMode"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- برای فایل‌های معمولی یا هنوز آپلود نشده -->
+  <ng-template #uploadBlock>
+    <div class="file-input-wrapper">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button" 
+        (click)="fileInput.click()"
+        [disabled]="disabled || isViewMode"
+      >
+        <mat-icon>upload</mat-icon> Datei wählen
+      </button>
+
+      <div *ngIf="fileName" class="file-info-wrapper">
+        <mat-icon>attach_file</mat-icon>
+        <span class="file-name">{{ fileName }}</span>
+        <button
+          mat-icon-button
+          class="edit-button"
+          type="button"
+          (click)="fileInput.click()"
+          *ngIf="!isViewMode"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- فایل ورودی مخفی -->
+  <input
+    #fileInput
+    type="file"
+    [accept]="accept"
+    (change)="onFileChange($event)"
+    hidden
+    (click)="$event.stopPropagation()"
+  />
+</div>

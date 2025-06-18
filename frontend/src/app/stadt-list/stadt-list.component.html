@@ -1,0 +1,73 @@
+
+<mat-card class="stadt-list-card">
+
+  <mat-card-title>Liste der Städte</mat-card-title>
+
+  <mat-card-content>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="createNew()">
+        <mat-icon>add</mat-icon> Neue Stadt
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-mdc-table mat-elevation-z8" *ngIf="!loading && dataSource.data.length > 0">  
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let stadt"> {{ stadt.code }} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let stadt"> {{ stadt.name }} </td>
+      </ng-container>
+
+      <!-- Bundesland Column -->
+      <ng-container matColumnDef="bundesland">
+        <th mat-header-cell *matHeaderCellDef> Bundesland </th>
+        <td mat-cell *matCellDef="let stadt"> {{ stadt.bundesland }} </td>
+      </ng-container>
+
+      <!-- Aktiv Column -->
+      <ng-container matColumnDef="aktiv">
+        <th mat-header-cell *matHeaderCellDef> Aktiv </th>
+        <td mat-cell *matCellDef="let stadt">
+          <mat-icon color="{{ stadt.aktiv ? 'primary' : 'warn' }}">
+            {{ stadt.aktiv ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Aktionen </th>
+        <td mat-cell *matCellDef="let stadt">
+          <button mat-icon-button color="accent" (click)="editStadt(stadt)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteStadt(stadt.id!)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 25]" showFirstLastButtons>
+    </mat-paginator>
+
+    <div *ngIf="!loading && dataSource.data.length === 0">
+      <p>Keine Städte gefunden.</p>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
+

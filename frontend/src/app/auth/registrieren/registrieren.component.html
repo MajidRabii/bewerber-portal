@@ -1,0 +1,22 @@
+<form [formGroup]="formular" (ngSubmit)="codeSenden()" class="registrieren-formular">
+  <h2>Registrierung</h2>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Benutzername</mat-label>
+    <input matInput formControlName="benutzername" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>E-Mail</mat-label>
+    <input matInput type="email" formControlName="email" />
+  </mat-form-field>
+
+  <div class="aktionen">
+    <button mat-raised-button color="primary" type="submit" [disabled]="formular.invalid">
+      Code senden
+    </button>
+
+    <button mat-button type="button" (click)="abbrechen()">Abbrechen</button>
+    <button mat-button type="button" (click)="zumLogin()">Login</button>
+  </div>
+</form>

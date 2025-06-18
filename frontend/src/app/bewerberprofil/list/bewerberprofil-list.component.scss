@@ -1,0 +1,20 @@
+@import '../../../styles.scss';
+
+.bewerberprofil-list {
+  width: 100%;
+  margin: 16px auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  //tr:hover {
+  //  background-color: $hover-color; // فرض می‌گیریم اینو تو styles.scss تعریف کردی
+  //}
+}

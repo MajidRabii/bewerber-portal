@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f3f3f3;
+}
+
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 220px;
+  background-color: #e0e0e0;
+  padding: 1rem;
+}
+
+.inhalt {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.user {
+  margin-right: 10px;
+}
+
+.menu-button {
+  display: inline-flex; // همیشه نمایش بده
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .sidenav {
+    width: 200px;
+    padding: 0.5rem;
+  }
+}

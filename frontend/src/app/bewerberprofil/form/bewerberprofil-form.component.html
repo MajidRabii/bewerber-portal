@@ -1,0 +1,290 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()" class="bewerberprofil-form">
+  <!-- ==== PERSON SECTION ==== -->
+  <mat-card class="bewerberprofil-card">
+    <mat-card-title>Person</mat-card-title>
+    <mat-card-content>
+      <div class="person-grid-container">
+        <!-- ==== IMAGE UPLOAD AREA ==== -->
+        <div class="image-box">
+          <!-- اگر عکس وجود نداشته باشد -->
+          <ng-container *ngIf="!form.get('bild')?.value; else showImage">
+            <div class="upload-placeholder" *ngIf="!isViewMode">
+              <app-file-upload
+                [form]="form"
+                field="bild"
+                label="Bild hochladen"
+                [fileName]="form.get('bild_Name')?.value"
+                [isViewMode]="isViewMode"
+                [show]="true"
+                accept="image/*"
+                (fileSelected)="onFileSelected($event)"
+              ></app-file-upload>
+            </div>
+          </ng-container>
+
+          <!-- اگر عکس وجود داشته باشد -->
+          <ng-template #showImage>
+            <div class="image-wrapper">
+              <img
+                class="profile-image"
+                [src]="'data:' + form.get('bild_Type')?.value + ';base64,' + form.get('bild_Datei')?.value"
+                alt="Profilbild"
+              />
+
+              <!-- input پنهان برای انتخاب فایل -->
+              <input
+                type="file"
+                #imageInput
+                (change)="onImageFileSelected($event)"
+                accept="image/*"
+                style="display: none"
+              />
+
+              <button
+                mat-icon-button
+                class="edit-icon"
+                *ngIf="!isViewMode"
+                (click)="imageInput.click()"
+                type="button"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </ng-template>
+        </div>
+        <!-- Other Fields -->
+        <mat-form-field appearance="fill" style="grid-column: 2">
+          <mat-label>Anrede</mat-label>
+          <mat-select formControlName="anrede" [disabled]="isViewMode">
+            <mat-option *ngFor="let option of anredeOptionen" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="grid-column: 3">
+          <mat-label>Vorname</mat-label>
+          <input matInput formControlName="vorname" [readonly]="isViewMode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="grid-column: 4">
+          <mat-label>Nachname</mat-label>
+          <input matInput formControlName="nachname" [readonly]="isViewMode" />
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" style="grid-column: 2">
+          <mat-label>Geburtstag</mat-label>
+          <input matInput [matDatepicker]="geburtsPicker" formControlName="geburtstag" [readonly]="isViewMode" />
+          <mat-datepicker-toggle matSuffix [for]="geburtsPicker"></mat-datepicker-toggle>
+          <mat-datepicker #geburtsPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="grid-column: 3">
+          <mat-label>Geburtsort</mat-label>
+          <mat-select formControlName="geburtsort_Id" required>
+            <mat-option *ngFor="let stadt of staedte" [value]="stadt.id">{{ stadt.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" style="grid-column: 4">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" [readonly]="isViewMode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="grid-column: 2">
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="adresse" [readonly]="isViewMode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="grid-column: 3">
+          <mat-label>Ländercode</mat-label>
+          <mat-select formControlName="laendercode" [disabled]="isViewMode">
+            <mat-option *ngFor="let code of landerCodeOptionen" [value]="code.value">
+              {{ code.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex style="grid-column: 4">
+          <mat-label>Handynummer</mat-label>
+          <input matInput formControlName="handynummer" [readonly]="isViewMode">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ==== PROFIL SECTION ==== -->
+  <mat-card>
+    <mat-card-title>Profil</mat-card-title>
+    <mat-card-content>
+      <div class="form-grid">
+        <!-- Beruf & Erfahrung 1 -->
+        <mat-form-field appearance="fill">
+          <mat-label>Beruf 1</mat-label>
+          <mat-select formControlName="beruf1_Id" required>
+            <mat-option *ngFor="let beruf of berufe" [value]="beruf.id">{{ beruf.name_DE }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Erfahrung 1 (Jahre)</mat-label>
+          <input matInput type="number" formControlName="erfahrung1" />
+        </mat-form-field>
+        <!-- Beruf & Erfahrung 2 -->
+        <mat-form-field appearance="fill">
+          <mat-label>Beruf 2</mat-label>
+          <mat-select formControlName="beruf2_Id">
+            <mat-option *ngFor="let beruf of berufe" [value]="beruf.id">{{ beruf.name_DE }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Erfahrung 2 (Jahre)</mat-label>
+          <input matInput type="number" formControlName="erfahrung2" />
+        </mat-form-field>
+        <!-- Studium -->
+        <mat-form-field appearance="fill">
+          <mat-label>Abschlussart</mat-label>
+          <mat-select formControlName="abschlussart_Id">
+            <mat-option *ngFor="let art of abschlussarten" [value]="art.id">{{ art.name_DE }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Studiengang</mat-label>
+          <mat-select formControlName="studiengang_Id">
+            <mat-option *ngFor="let sg of studiengange" [value]="sg.id">{{ sg.name_DE }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Einrichtung</mat-label>
+          <input matInput formControlName="einrichtung" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Studienort</mat-label>
+          <mat-select formControlName="studienort_Id" required>
+            <mat-option *ngFor="let stadt of staedte" [value]="stadt.id">{{ stadt.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Sprachen -->
+        <mat-form-field appearance="fill">
+          <mat-label>Deutsch</mat-label>
+          <mat-select formControlName="deutsch_Id">
+            <mat-option *ngFor="let s of deutsch" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Niveau</mat-label>
+          <mat-select formControlName="niveau_Id">
+            <mat-option *ngFor="let s of niveau" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Englisch</mat-label>
+          <mat-select formControlName="englisch_Id">
+            <mat-option *ngFor="let s of englisch" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Zertifikate</mat-label>
+          <mat-select formControlName="zertifikate_Id">
+            <mat-option *ngFor="let s of zertifikate" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Persisch</mat-label>
+          <mat-select formControlName="persisch_Id">
+            <mat-option *ngFor="let s of persisch" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Fuehrerschein</mat-label>
+          <mat-select formControlName="fuehrerschein_Id">
+            <mat-option *ngFor="let s of fuehrerschein" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Einsatzwunsch</mat-label>
+          <mat-select formControlName="einsatzwunsch_Id">
+            <mat-option *ngFor="let s of einsatzwunsch" [value]="s.key">{{ s.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Ankunftsdatum</mat-label>
+          <input matInput [matDatepicker]="ankunftPicker" formControlName="ankunftsdatum" />
+          <mat-datepicker-toggle matSuffix [for]="ankunftPicker"></mat-datepicker-toggle>
+          <mat-datepicker #ankunftPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Weitere Felder -->
+        <mat-checkbox formControlName="anerkennung">Abschluss anerkannt?</mat-checkbox>
+        <mat-checkbox formControlName="auto">Eigener PKW vorhanden?</mat-checkbox>
+        <mat-checkbox formControlName="arbeitserlaubnis">Arbeitserlaubnis vorhanden?</mat-checkbox>
+
+          <!-- ==== Datei Uploads ==== -->
+          <app-file-upload
+            field="lebenslauf"
+            label="Lebenslauf hochladen"
+            [fileName]="form.get('lebenslauf_Name')?.value"
+            [isViewMode]="isViewMode"
+            [form]="form"
+            [show]="true"
+            accept=".pdf,.doc,.docx"
+            (fileSelected)="onFileSelected($event)" style="grid-column: 1">
+          ></app-file-upload>
+
+          <app-file-upload
+            field="bewerbung"
+            label="Bewerbung hochladen"
+            [fileName]="form.get('bewerbung_Name')?.value"
+            [isViewMode]="isViewMode"
+            [form]="form"
+            accept=".pdf,.doc,.docx"
+            (fileSelected)="onFileSelected($event)">
+          </app-file-upload>
+
+          <app-file-upload
+            field="sprachzertifikate"
+            label="Sprachzertifikate hochladen"
+            [fileName]="form.get('sprachzertifikate_Name')?.value"
+            [isViewMode]="isViewMode"
+            [form]="form"
+            accept=".pdf,.doc,.docx"
+            (fileSelected)="onFileSelected($event)">
+          </app-file-upload>
+
+          <app-file-upload
+            field="studiumzertifikate"
+            label="Studiumzertifikate hochladen"
+            [fileName]="form.get('studiumzertifikate_Name')?.value"
+            [isViewMode]="isViewMode"
+            [form]="form"
+            accept=".pdf,.doc,.docx"
+            (fileSelected)="onFileSelected($event)">
+          </app-file-upload>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ==== ACTION BUTTON ==== -->
+  <div class="form-actions" style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px;">
+    <button mat-raised-button color="primary" type="submit" *ngIf="!isViewMode" [disabled]="form.invalid">
+      Speichern
+    </button>
+
+    <button mat-raised-button color="accent" type="button" (click)="onCancel()">
+      Abbrechen
+    </button>
+  </div>
+</form>

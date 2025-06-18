@@ -1,0 +1,17 @@
+<form [formGroup]="formular" (ngSubmit)="passwortFestlegen()" class="passwort-formular">
+  <h2>Passwort festlegen</h2>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input matInput type="password" formControlName="passwort" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort wiederholen</mat-label>
+    <input matInput type="password" formControlName="passwortWiederholen" required />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="formular.invalid">
+    Speichern
+  </button>
+</form>

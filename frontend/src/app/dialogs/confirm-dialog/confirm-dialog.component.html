@@ -1,0 +1,23 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="icon-circle">
+      <mat-icon class="warning-icon" fontIcon="warning">warning</mat-icon>
+    </div>
+    <div class="dialog-title">
+      Möchten Sie diese Stadt wirklich löschen?
+    </div>
+  </div>
+
+  <div class="dialog-content">
+    Dieses Element wird gelöscht und kann nicht wiederhergestellt werden.
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-stroked-button color="primary" (click)="dialogRef.close(false)">
+      Abbrechen
+    </button>
+    <button mat-flat-button color="warn" (click)="dialogRef.close(true)">
+      Löschen
+    </button>
+  </div>
+</div>

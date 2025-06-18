@@ -1,0 +1,10 @@
+<h2>Stadt Formular</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="stadtForm">
+  <div>
+    <label for="name">Stadtname:</label>
+    <input id="name" type="text" formControlName="name" />
+  </div>
+
+  <button type="submit" [disabled]="stadtForm.invalid">Speichern</button>
+</form>
