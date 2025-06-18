@@ -1,4 +1,4 @@
-# Bewerberportal (Fullstack-Projekt)
+﻿# Bewerberportal (Fullstack-Projekt)
 
 ## 🌍 Beschreibung (Deutsch)
 
@@ -41,7 +41,14 @@ In addition to my backend expertise (C#, EF Core, PostgreSQL), I gained hands-on
 
 ## 🖼️ Screenshots
 
-👉 (Hier werden Screenshots eingefügt – siehe unten)
+### 🔐 Login Page
+![Login Screenshot](screenshots/screenshot-login.png)
+
+### 🧑‍💼 Profilverwaltung
+![Profil Screenshot](screenshots/screenshot-profil.png)
+
+### 🧭 StadtListe nach dem Login
+![StadtListe Screenshot](screenshots/screenshot-stadtliste.png)
 
 ---
 
