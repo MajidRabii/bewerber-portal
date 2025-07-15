@@ -6,3 +6,14 @@ obj/
 *.user 
 *.suo 
 .vscode/ 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+appsettings.json
+appsettings.Development.json
+# Ignore sensitive settings
+backend/BewerbungAPP/appsettings.json
+backend/BewerbungAPP/appsettings.Development.json
+backend/BewerbungAPP/appsettings.Production.json
